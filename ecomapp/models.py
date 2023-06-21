@@ -19,15 +19,11 @@ class UserDetails(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
 
-
-# class CartView(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-#     product = models.ForeignKey(ProductDetails, on_delete=models.CASCADE)
-#     quantity = models.PositiveIntegerField(default=1)
     
 class CartViews(models.Model):
-    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE)
     product = models.ForeignKey(ProductDetails, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)

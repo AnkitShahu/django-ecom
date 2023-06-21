@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import ProductDetails
-from .serializers import ProductSerializer, UserSerializer
+from .models import ProductDetails, UserDetails, CartViews
+from .serializers import ProductSerializer, UserViewSerialize, CartViewSerialize,UserSerializer
 from rest_framework import viewsets, generics
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -78,11 +78,15 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 
-# class CartViewSet(viewsets.ModelViewSet):
-#     queryset = CartView.objects.all()
-#     serializer_class = CartViewSerialize
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = CartViews.objects.all()
+    serializer_class = CartViewSerialize
 
-
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = UserDetails.objects.all()
+    serializer_class = UserViewSerialize
+    
+    
 class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

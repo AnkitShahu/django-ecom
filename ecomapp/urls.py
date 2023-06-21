@@ -1,12 +1,12 @@
 from django.urls import path, include
 from . import views
-from  ecomapp.views import ProductViewSet, UserListAPIView
+from  ecomapp.views import ProductViewSet, UserViewSet, CartViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet)
-# router.register(r'cart-view', CartViewSet)
-#router.register(r'users', UserListAPIView)
+router.register(r'cart-view', CartViewSet)
+router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
