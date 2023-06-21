@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+    <h1>Your Cart:</h1>
+
+    {% for product in products %}
+        {% comment %} <li>{{ product.product_name }} - ${{ product.product_price }}</li> {% endcomment %}
+
+        {% comment %} <div class="card">
+            <h5 class="card-header">{{ product.product_name }}</h5>
+            <div class="card-body">
+              <h5 class="card-title">${{ product.product_price }}</h5>
+              <p class="card-text"></p>
+              <a href="#" class="btn btn-primary">Check out</a>
+            </div>
+          </div> {% endcomment %}
+
+          <div class="col-md-12">
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="{% get_media_prefix %}{{product.product_image1}}" class="img-fluid rounded-start" alt="Product 1">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                      <h3 class="card-title">{{ product.product_name }}</h3>
+                      <p class="card-text">Price: <span class="price">${{ product.product_price }}</span></p>
+     
+                          <div class="d-flex align-items-center">
+                            <button class="btn btn-secondary btn-sm me-2 decrease-btn">-</button>
+                            <span class="quantity">2</span>
+                            <button class="btn btn-secondary btn-sm ms-2 increase-btn">+</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    {% empty %}
+        <li>Your cart is empty.</li>
+    {% endfor %}
+    <div class="text-end">
+        <h5>Total: $<span id="total-price"></span></h5>
+        <button class="btn btn-primary">Checkout</button>
+      </div>
+
+    {% comment %} <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://cdn4.buysellads.net/uu/1/127419/1670531697-AdobeTeams.jpg" class="img-fluid rounded-start" alt="Product 2">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Product 2</h5>
+                <p class="card-text">Price: $15</p>
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-secondary btn-sm me-2">-</button>
+                  <span>2</span>
+                  <button class="btn btn-secondary btn-sm ms-2">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-end">
+        <h5>Total: $<span id="total-price">40</span></h5>
+        <button class="btn btn-primary">Checkout</button>
+      </div> {% endcomment %}
+  
+    <script>
+        // Quantity increment and decrement
+        const decreaseButtons = document.querySelectorAll('.decrease-btn');
+        const increaseButtons = document.querySelectorAll('.increase-btn');
+        const quantityElements = document.querySelectorAll('.quantity');
+        const totalPriceElement = document.getElementById('total-price');
+    
+        decreaseButtons.forEach((button, index) => {
+          button.addEventListener('click', () => {
+            let quantity = parseInt(quantityElements[index].textContent);
+            if (quantity > 1) {
+              quantity--;
+              quantityElements[index].textContent = quantity;
+              updatePrice();
+            }
+          });
+        });
+    
+        increaseButtons.forEach((button, index) => {
+          button.addEventListener('click', () => {
+            let quantity = parseInt(quantityElements[index].textContent);
+            quantity++;
+            quantityElements[index].textContent = quantity;
+            updatePrice();
+          });
+        });
+    
+        // Update total price
+        function updatePrice() {
+          let totalPrice = 0;
+          document.querySelectorAll('.card').forEach((card, index) => {
+            const price = parseInt(card.querySelector('.price').textContent.replace('$', ''));
+            const quantity = parseInt(quantityElements[index].textContent);
+            totalPrice += price * quantity;
+          });
+          totalPriceElement.textContent = totalPrice;
+        }
+        updatePrice()
+      </script>
+{% endblock main %}

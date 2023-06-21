@@ -1,2 +1,26 @@
 {% extends 'base.html' %}
-{% block main %}hello index{% endblock main %}
+{% load static %}
+{% block main %}
+
+<h1>Welcome to our e-commerce store!</h1>
+<h2>Products:</h2>
+<div class="row">
+{% for product in products %}
+<div class="col-md-4">
+<div class="card mt-4" style="width: 18rem;">
+    <img src="{% get_media_prefix %}{{product.product_image1}}" class="card-img-top" alt="">
+    <div class="card-body">
+      <h3 class="card-title">{{ product.product_name }}</h3>
+      <h5>${{ product.product_price }}</h5>
+      <p class="card-text">{{product.product_details}}</p>
+      <a href="{% url 'add_to_cart' product.product_id %}" class="btn btn-primary">Add to Cart</a>
+    </div>
+  </div>
+</div>
+    {% comment %} <li>
+        {{ product.product_name }} - ${{ product.product_price }}
+        <a href="{% url 'add_to_cart' product.product_id %}">Add to Cart</a>
+    </li> {% endcomment %}
+{% endfor %}
+</div>
+{% endblock main %}
